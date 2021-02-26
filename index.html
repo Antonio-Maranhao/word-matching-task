@@ -20,78 +20,81 @@
         border-width: 2px;
         border-style: solid;
       }
-      .btn-arrows {
-        margin: 5px;
+      .btn-arrow {
+        margin-bottom: 5px;
+        font-size: 2rem;
+      }
+      .btn-command {
+        font-size: 2rem;
       }
       .default-padding {
         padding: 10px;
       }
+      .titleRow {
+        margin: 0 0 1rem 0;
+      }
+			select:disabled.always-enabled {
+				color: #000;
+				background-color: #fff;
+				opacity:1;
+			}
+			select:disabled.always-enabled option:checked {
+				box-shadow: 0 0 10px 100px #B3D7FE inset;
+				-webkit-text-fill-color: #212529;
+			}
+			select[disabled].always-enabled option {
+				color: #212529;
+			}
     </style>
 	
 		<div class="container" id="startPanel" style="display: block;">
 			<div class="row" style="padding-top: 200px">
-        <button type="button" class="btn btn-success" style="width: 100%" id="buttonStart">
+        <button type="button" class="btn btn-success btn-command" style="width: 100%" id="buttonStart">
           Start
         </button>
       </div>
 		</div>
-    <div class="container" id="taskPanel" style="display: none;">
+    <div class="container" id="taskPanel" style="display: none; padding-top: 50px;">
+			<div class="row titleRow">
+        <h2>Task <span id="taskNumberLb"></span></h2>
+      </div>
       <div class="row align-items-center">
         <div class="col-md-auto default-padding">
-          <button type="button" class="btn btn-secondary btn-arrows" id="buttonUp">⇧</button>
+          <button type="button" class="btn btn-secondary btn-arrow" id="buttonUp">↑</button>
           <br />
-          <button type="button" class="btn btn-secondary btn-arrows" id="buttonDown">⇩</button>
+          <button type="button" class="btn btn-secondary btn-arrow" id="buttonDown">↓</button>
         </div>
         <div class="col default-padding">
           <div>
             <select
-              class="form-select"
-              multiple
+              class="form-select always-enabled"
               aria-label="multiple select example"
-              size="2"
+              size="3"
 							id="wordList"
-							style="font-size: 2.1rem"
+							style="font-size: 2.1rem;"
+							disabled
             >
-
             </select>
           </div>
         </div>
       </div>
-      <div class="row" style="padding-top: 200px">
-        <button type="button" class="btn btn-success" style="width: 100%" id="buttonSubmit">
+      <div class="row" style="padding-top: 150px">
+        <button type="button" class="btn btn-success btn-command" style="width: 100%" id="buttonSubmit">
           Submit
         </button>
       </div>
     </div>
 
-    <!--
-    <div class="container">THE DEFALT UONE</div>
-    <div class="container-fluid">VERY VERY VERY FLUID</div>
-    <div class="container-sm with-border">
-      100% wide until small breakpoint fjdksajf kdjslkaf lkdsakf
-    </div>
-    <div class="container-md with-border">
-      100% wide until medium breakpoint fjdksajf kdjslkaf lkdsakf
-    </div>
-    <div class="container-lg with-border">
-      100% wide until large breakpoint fjdksajf kdjslkaf lkdsakf
-    </div>
-    <div class="container-xl with-border">
-      100% wide until extra large breakpoint fjdksajf kdjslkaf lkdsakf
-    </div>
-    <div class="container-xxl with-border">
-      100% wide until extra extra large breakpoint fjdksajf kdjslkaf lkdsakf
-    </div>
-	-->
-    <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!-- Bootstrap Bundle with Popper -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"
     ></script>
 
+		<script src="miniSet.js" crossorigin="anonymous"></script>
+		<script src="largeSet.js" crossorigin="anonymous"></script>
 		<script src="core.js" crossorigin="anonymous"></script>
   </body>
 </html>

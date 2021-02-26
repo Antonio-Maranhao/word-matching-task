@@ -1,32 +1,42 @@
-// correctList = {'Discover','Project','Missions'};
 
-console.log('loading this');
-let wordOptions = [
-	{label: 'Discover Banana Mechanic', value: 1},
-	{label: 'Motivate Zealand Needles', value: 0},
-	{label: 'Pinene Missions Superset', value: 0},
-	{label: 'Religion Orange Missions', value: 1},
-	{label: 'Summary Project Vacation', value: 1},
-	{label: 'Arrival Flight Something', value: 0},
-	{label: 'Kingdom Retired Missions', value: 1}
-];
-
+// Set to 'true' to print all events to the browser's console
+const logEventToConsole = true;
 
 const executions = [];
 let execLog = [];
 let currentIteration = 1;
 
+function logEvent(event) {
+	const eventWithTime = {
+		...event,
+		ts: new Date().toISOString(),
+	};
+	execLog.push(eventWithTime);
+	if (logEventToConsole) {
+		console.log(eventWithTime);
+	}
+}
+
 function startTask() {
-	execLog.push({
+	logEvent({
 		type: "start",
-		ts: new Date(),
 	});
+	const startIndex = (currentIteration - 1) * 10;
+	const subset = wordListLarge.slice(startIndex, startIndex + 10);
+	loadOptions(subset);
+	const taskNumberLabel = document.getElementById('taskNumberLb');
+	taskNumberLabel.textContent = currentIteration;
 }
 
 function endTask() {
-	execLog.push({
+	const wordList = document.getElementById('wordList');
+	logEvent({
 		type: "end",
-		ts: new Date(),
+		selection: {
+			index: wordList.selectedIndex,
+			label: wordList.options[wordList.selectedIndex].label,
+			isCorrect: wordList.options[wordList.selectedIndex].value,
+		}
 	});
 	executions.push({
 		iteration: currentIteration,
@@ -37,13 +47,17 @@ function endTask() {
 }
 
 
-function loadOptions() {
+function loadOptions(options) {
 	console.log('going to load');
 	const wordList = document.getElementById('wordList');
-	wordOptions.forEach(el => {
+	// Clear list before adding new items
+	for (let i=wordList.options.length-1; i>=0; i--) {
+		wordList.options[i].remove();
+	}
+	options.forEach(el => {
 		const newOption = document.createElement("option");
 		newOption.text = el.label;
-		newOption.value = el.value;
+		newOption.value = el.answer;
 		wordList.add(newOption);
 	});
 	wordList.selectedIndex = 0;
@@ -58,17 +72,15 @@ function moveToOption(increment) {
 }
 function onButtonUp() {
 	// console.log('moving up');
-	execLog.push({
+	logEvent({
 		type: "button-up",
-		ts: new Date(),
 	});
 	moveToOption(-1);
 }
 
 function onButtonDown() {
-	execLog.push({
+	logEvent({
 		type: "button-down",
-		ts: new Date(),
 	});
 	moveToOption(+1);
 }
@@ -95,7 +107,6 @@ function onButtonSubmit() {
 // Runs after page is loaded to setup event handler and any other
 // initialization code.
 function onWindowLoad() {
-	loadOptions();
 	document.getElementById("buttonUp").addEventListener('click', onButtonUp, false);
 	document.getElementById("buttonDown").addEventListener('click', onButtonDown, false);
 	document.getElementById("buttonSubmit").addEventListener('click', onButtonSubmit, false);
